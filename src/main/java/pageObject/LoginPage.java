@@ -57,7 +57,7 @@ public class LoginPage extends BasePage {
     }
 
     public EditorPage clickOnInstagramStoryLink() {
-        clickAndSwitchToNextTab(instaStoryButton);
+        clickAndOpenNewTab(instaStoryButton);
         return new EditorPage(EditorTypes.INSTA_STORY_TEMP);
     }
 }

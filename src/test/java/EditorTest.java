@@ -22,5 +22,8 @@ public class EditorTest extends BaseTest {
         assertEquals(editorPage.getUrl(),getDriver().getCurrentUrl(),"Did not navigate to [Editor Page] by clicking [instaStoryButton]");
         assertEquals(editorPage.getSlideBarElementsSize(),7,"Slide bar elements are not present in [Editor Page]");
 
+        editorPage = editorPage.clickFitButton();
+        assertEquals(editorPage.getFitButtonItemsSize(),28,"Items elements are not present in [Editor Page] by clicking [Fit Button]");
+        assertTrue(editorPage.isFitItemDisplayed(0),"Items elements are not present in [Editor Page] by clicking [Fit Button]");
     }
 }

@@ -3,6 +3,8 @@ package pageObject.base;
 import helper.WaitHelper;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,15 +64,29 @@ public abstract class BasePage {
     }
 
     protected void click(WebElement element) {
+        clickActions(element);
         element.click();
     }
-    protected void clickAndSwitchToNextTab(By location) {
-        WaitHelper.waitUntilElementIsClickable(find(location));
-        clickActions(find((location)));
+    protected void clickAndOpenNewTab(By location) {
+        clickActions(find(location));
         System.out.println("Clicking on element -> " + location.toString());
         List<String> windowHandles = new ArrayList<>(getDriver().getWindowHandles());
         getDriver().switchTo().window(windowHandles.get(windowHandles.size() - 1));
     }
+    protected void clickByJS(WebElement element) {
+        clickActions(element);
+        System.out.println("Clicking on element -> " + element.toString());
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        executor.executeScript("arguments[0].click();", element);
+    }
+
+    protected void displayNoneToElement(WebElement element) {
+        clickActions(element);
+        System.out.println("Clicking on element -> " + element.toString());
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        executor.executeScript("arguments[0].setAttribute('display', 'none');", element);
+    }
+
     protected void clickActions(WebElement element) {
         WaitHelper.waitUntilElementIsVisible(element);
         WaitHelper.waitUntilElementIsClickable(element);
