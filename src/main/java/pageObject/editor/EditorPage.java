@@ -11,24 +11,25 @@ import java.util.List;
 public class EditorPage extends BasePage {
 
     private final List<WebElement> slideBarElements = driver.findElements(By.cssSelector("[class*='sidebarTooltipItem']"));
-    private final List<WebElement> fitButtonItems = driver.findElements(By.cssSelector("[class*='itemName']"));
-    private final WebElement fitButton = driver.findElement(By.id("background-category"));
-    private final WebElement tipNextButton = driver.findElement(By.cssSelector("[data-test='nextButton']"));
-
-
-    private final WebElement slideBar = driver.findElement(By.cssSelector("[class*='sidebarCategoriesWrapper']"));
+    private final By fitButtonItems = By.cssSelector("[class*='itemName']");
+    private final By fitButton = By.id("background-category");
+    private final By slideBar = By.cssSelector("[class*='sidebarCategoriesWrapper']");
 
     private String queryUrl;
     private String url = "/create/editor";
 
     public EditorPage(){
-        System.out.println("Opening url -> " + getUrl());
-        open(getUrl());
+
     }
 
     public EditorPage(EditorTypes editorTypes){
         this.queryUrl = editorTypes.getChooserUrl();
         System.out.println("Opening url -> " + getUrl());
+    }
+
+    public EditorPage open(){
+        open(getUrl());
+        return this;
     }
 
     @Override
@@ -43,17 +44,12 @@ public class EditorPage extends BasePage {
     }
 
     public int getFitButtonItemsSize(){
-        WaitHelper.waitUntilListElementIsVisible(fitButtonItems);
-        return fitButtonItems.size();
-    }
-
-    public boolean isFitItemDisplayed(int index){
-        WaitHelper.waitUntilElementIsVisible(fitButtonItems.get(index));
-        return isDisplayed(fitButtonItems.get(index));
+        WaitHelper.waitUntilElementIsVisible(fitButtonItems);
+        return findAll(fitButtonItems).size();
     }
 
     public EditorPage clickFitButton(){
-        click(tipNextButton);
+        WaitHelper.waitUntilElementIsClickable(fitButton);
         click(fitButton);
         return this;
     }

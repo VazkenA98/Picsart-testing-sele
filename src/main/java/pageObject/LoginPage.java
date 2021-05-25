@@ -18,8 +18,6 @@ public class LoginPage extends BasePage {
     private final By signInButtonLocation = By.cssSelector(".pa-uiLib-authentication-btn.primary");
     private final By avatarLocation = By.cssSelector(".pa-uiLib-headerProfileInfo-avatar");
 
-    private final By instaStoryButton = By.cssSelector("[data-test='insta-story']");
-
     public LoginPage () {
         open(getUrl()+"/create");
     }
@@ -56,8 +54,4 @@ public class LoginPage extends BasePage {
         return avatarIcon.isDisplayed();
     }
 
-    public EditorPage clickOnInstagramStoryLink() {
-        clickAndOpenNewTab(instaStoryButton);
-        return new EditorPage(EditorTypes.INSTA_STORY_TEMP);
-    }
 }

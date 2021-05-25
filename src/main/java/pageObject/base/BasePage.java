@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static config.DriverSetup.getDriver;
 
@@ -91,6 +92,27 @@ public abstract class BasePage {
         WaitHelper.waitUntilElementIsVisible(element);
         WaitHelper.waitUntilElementIsClickable(element);
         new Actions(getDriver()).moveToElement(element).click().build().perform();
+    }
+
+    public List<WebElement> findAll(By location) {
+        System.out.println("Finding elements -> " + location.toString());
+        return driver.findElements(location);
+    }
+
+    protected void clickAndSwitchToNextTab(By location) {
+        WaitHelper.waitUntilElementIsClickable(find(location));
+        clickActions(find(location));
+        System.out.println("Clicking on element -> " + location.toString());
+        List<String> windowHandles = new ArrayList<>(getDriver().getWindowHandles());
+        getDriver().switchTo().window(windowHandles.get(windowHandles.size() - 1));
+    }
+
+    protected void hoverByText(By elements, String text) {
+        Actions action = new Actions(getDriver());
+        driver.findElements(elements).stream()
+                .filter(e -> Objects.equals(e.getText(), text))
+                .findAny()
+                .ifPresent(element -> action.moveToElement(element).click().build().perform());
     }
 
 }
