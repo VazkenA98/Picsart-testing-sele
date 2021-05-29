@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObject.editor.EditorPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,6 @@ public abstract class BasePage {
     }
 
     protected WebElement find(By location) {
-        System.out.println("Finding element -> " + location.toString());
         WaitHelper.waitUntilElementIsVisible(location);
         return driver.findElement(location);
     }
@@ -74,12 +74,6 @@ public abstract class BasePage {
         List<String> windowHandles = new ArrayList<>(getDriver().getWindowHandles());
         getDriver().switchTo().window(windowHandles.get(windowHandles.size() - 1));
     }
-    protected void clickByJS(WebElement element) {
-        clickActions(element);
-        System.out.println("Clicking on element -> " + element.toString());
-        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-        executor.executeScript("arguments[0].click();", element);
-    }
 
     protected void displayNoneToElement(WebElement element) {
         clickActions(element);
@@ -101,7 +95,6 @@ public abstract class BasePage {
 
     protected void clickAndSwitchToNextTab(By location) {
         WaitHelper.waitUntilElementIsClickable(find(location));
-        clickActions(find(location));
         System.out.println("Clicking on element -> " + location.toString());
         List<String> windowHandles = new ArrayList<>(getDriver().getWindowHandles());
         getDriver().switchTo().window(windowHandles.get(windowHandles.size() - 1));
@@ -114,5 +107,20 @@ public abstract class BasePage {
                 .findAny()
                 .ifPresent(element -> action.moveToElement(element).click().build().perform());
     }
+
+    protected void scrollTo(By location) {
+        System.out.println("Scrolling to element -> " + location.toString());
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", find(location));
+    }
+    protected void clickByJS(By location) {
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        executor.executeScript("arguments[0].click();", find(location));
+    }
+
+    protected void scrollAndClick(By location){
+        scrollTo(location);
+        clickByJS(location);
+    }
+
 
 }

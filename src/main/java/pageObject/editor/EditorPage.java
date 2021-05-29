@@ -53,4 +53,10 @@ public class EditorPage extends BasePage {
         click(fitButton);
         return this;
     }
+
+    public EditorPage clickFitButtonByJS(){
+        WaitHelper.waitUntilElementIsClickable(fitButton);
+        clickByJS(fitButton);
+        return this;
+    }
 }

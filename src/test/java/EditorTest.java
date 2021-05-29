@@ -22,4 +22,14 @@ public class EditorTest extends VerifiedUserTest {
         editorPage = editorPage.clickFitButton();
         assertEquals(editorPage.getFitButtonItemsSize(),28,"Items elements are not present in [Editor Page] by clicking [Fit Button]");
     }
+
+    @Test
+    public void facebookAdScrollCheck(){
+        CreatePage createPage = new CreatePage().open();
+        login();
+        EditorPage editorPage = createPage.clickOnFacebookAdLink().open();
+        editorPage = editorPage.clickFitButtonByJS();
+        assertEquals(editorPage.getUrl(),getDriver().getCurrentUrl(),"Did not navigate to [Editor Page] by clicking [FacebookAdLink]");
+        assertEquals(editorPage.getFitButtonItemsSize(),28,"Items elements are not present in [Editor Page] by clicking [Fit Button]");
+    }
 }

@@ -3,6 +3,7 @@ package pageObject;
 import enums.EditorTypes;
 import helper.WaitHelper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import pageObject.base.BasePage;
 import pageObject.editor.EditorPage;
 import pageObject.header.NavigationHeader;
@@ -10,6 +11,7 @@ import pageObject.header.NavigationHeader;
 public class CreatePage extends BasePage {
 
     private final By instaStoryButton = By.cssSelector("[data-test='insta-story']");
+    private final By facebookAdButton = By.cssSelector("[data-test='fb-ad']");
 
     private By uploadButtonLocation = By.cssSelector("[class*='uploadButton'] input");
     private By downloadButtonLocation = By.id("download-button");
@@ -35,6 +37,12 @@ public class CreatePage extends BasePage {
     public EditorPage clickOnInstagramStoryLink() {
         clickAndSwitchToNextTab(instaStoryButton);
         return new EditorPage(EditorTypes.INSTA_STORY_TEMP);
+    }
+
+    public EditorPage clickOnFacebookAdLink(){
+        scrollTo(facebookAdButton);
+        clickAndSwitchToNextTab(facebookAdButton);
+        return new EditorPage(EditorTypes.FACEBOOK_AD_TEMP);
     }
 
     public NavigationHeader getNavigationHeader(){

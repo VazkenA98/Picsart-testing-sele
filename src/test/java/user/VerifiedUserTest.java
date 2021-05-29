@@ -2,12 +2,13 @@ package user;
 
 import base.BaseTest;
 import org.openqa.selenium.Cookie;
+import org.testng.annotations.AfterMethod;
 import pageObject.LoginPage;
 
 import static config.DriverSetup.getDriver;
 import static org.testng.Assert.assertTrue;
 
-public class VerifiedUserTest extends BaseTest {
+public class VerifiedUserTest {
 
     protected void login(){
         LoginPage loginPage = new LoginPage();
@@ -16,5 +17,10 @@ public class VerifiedUserTest extends BaseTest {
         getDriver().manage().addCookie(new Cookie("we-editor-first-open", "true"));
         getDriver().navigate().refresh();
         assertTrue(loginPage.isUserLoggedIn(), "User is not logged in!");
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        getDriver().quit();
     }
 }
