@@ -1,9 +1,12 @@
 package pageObject.base;
 
 import helper.WaitHelper;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObject.editor.EditorPage;
 
@@ -14,15 +17,32 @@ import java.util.Objects;
 import static config.DriverSetup.getDriver;
 
 
-public abstract class BasePage {
+public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableComponent<T> {
     protected WebDriver driver;
     public static final String BASE_URL="https://picsart.com";
+    public static final Logger LOGGER = Logger.getLogger(BasePage.class);
 
     public BasePage() {
         this.driver = getDriver();
     }
 
     public abstract String getUrl();
+
+    protected T initPage() {
+        PageFactory.initElements(getDriver(), this);
+        LOGGER.info("Initialising to " + getDriver().getCurrentUrl());
+        return (T) this;
+    }
+    @Override
+    protected void load() {
+        driver.get(getUrl());
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        WaitHelper.waitForPageReady();
+    }
+
 
     protected void open(String url) {
         System.out.println("Opening url -> " + url);

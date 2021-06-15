@@ -2,17 +2,20 @@ package pageObject.header;
 
 import helper.WaitHelper;
 import org.openqa.selenium.By;
-import pageObject.Challenges.ChallengesPage;
+import org.openqa.selenium.support.PageFactory;
+
 import pageObject.base.BasePage;
 
+import static config.DriverSetup.getDriver;
 
-public class NavigationHeader extends BasePage {
+
+public class NavigationHeader extends BasePage<NavigationHeader> {
 
     private final By headerNavigationButtons = By.cssSelector(".pa-uiLib-headerNavigation-url");
     private final By challengesHeaderLink = By.cssSelector("[data-test='subNavigation-groupList'] a[href='/challenges']");
 
     public NavigationHeader(){
-
+        PageFactory.initElements(getDriver(), this);
     }
 
     @Override
@@ -20,12 +23,6 @@ public class NavigationHeader extends BasePage {
         return null;
     }
 
-    public ChallengesPage clickOnChallengesHeaderLink(){
-        WaitHelper.waitUntilElementIsVisible(headerNavigationButtons);
-        hoverDiscover();
-        click(challengesHeaderLink);
-        return new ChallengesPage();
-    }
 
     public NavigationHeader hoverDiscover() {
         WaitHelper.waitUntilElementIsVisible(headerNavigationButtons);

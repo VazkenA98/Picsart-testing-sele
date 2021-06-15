@@ -10,7 +10,7 @@ import pageObject.base.BasePage;
 import pageObject.editor.EditorPage;
 
 
-public class LoginPage extends BasePage {
+public class LoginPage extends BasePage<LoginPage> {
 
     private final By usernameFieldLocation = By.name("username");
     private final By passwordFieldLocation = By.name("password");
@@ -21,6 +21,7 @@ public class LoginPage extends BasePage {
     public LoginPage () {
         open(getUrl()+"/create");
     }
+
 
     @Override
     public String getUrl() {

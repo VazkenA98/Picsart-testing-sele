@@ -4,22 +4,27 @@ import enums.EditorTypes;
 import helper.WaitHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import pageObject.base.BasePage;
 
 import java.util.List;
 
-public class EditorPage extends BasePage {
+import static config.DriverSetup.getDriver;
 
-    private final List<WebElement> slideBarElements = driver.findElements(By.cssSelector("[class*='sidebarTooltipItem']"));
-    private final By fitButtonItems = By.cssSelector("[class*='itemName']");
-    private final By fitButton = By.id("background-category");
-    private final By slideBar = By.cssSelector("[class*='sidebarCategoriesWrapper']");
+public class EditorPage extends BasePage<EditorPage> {
+
+    @FindBy(css = "[class*='sidebarTooltipItem']")
+    private List<WebElement> slideBarElements;
+
+    @FindBy(css = "[class*='sidebarCategoriesWrapper']")
+    private WebElement slideBar;
 
     private String queryUrl;
     private String url = "/create/editor";
 
     public EditorPage(){
-
+        PageFactory.initElements(getDriver(), this);
     }
 
     public EditorPage(EditorTypes editorTypes){
@@ -43,20 +48,5 @@ public class EditorPage extends BasePage {
         return slideBarElements.size();
     }
 
-    public int getFitButtonItemsSize(){
-        WaitHelper.waitUntilElementIsVisible(fitButtonItems);
-        return findAll(fitButtonItems).size();
-    }
 
-    public EditorPage clickFitButton(){
-        WaitHelper.waitUntilElementIsClickable(fitButton);
-        click(fitButton);
-        return this;
-    }
-
-    public EditorPage clickFitButtonByJS(){
-        WaitHelper.waitUntilElementIsClickable(fitButton);
-        clickByJS(fitButton);
-        return this;
-    }
 }

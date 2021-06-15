@@ -40,4 +40,9 @@ public class WaitHelper {
         }
         return webElementList;
     }
+
+    public static void waitForPageReady() {
+        new WebDriverWait(getDriver(), 10).until((ExpectedConditions.jsReturnsValue("return document.readyState=='complete';")));
+
+    }
 }

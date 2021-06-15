@@ -14,7 +14,7 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage();
         loginPage.clickLoginButton();
         loginPage.typeUsername("vazkena98");
-        loginPage.typePassword("Vazrig-1998");
+        loginPage.typePassword("");
         loginPage.clickSignInButton();
 
         assertTrue(loginPage.isUserLoggedIn(), "User is not logged in!");
